@@ -39,8 +39,11 @@ Results will be saved in model/ultralytics/runs/detect/train* directory (subsequ
 ## Inference
 
 Navigate to model directory. Set training_dir variable in infer.py to training results directory name (e.g. "train"). Then run:
+
 ```bash
 ./infer.sh
 ```
+
+Results will be saved in model/ultralytics/runs/detect/infer_* (where * denotes the value of the training_dir variable).
 
 ## Evaluation Metrics
