@@ -1,0 +1,51 @@
+242a243,280
+>     def align_loss(self, bboxes, cls):
+>         n_bboxes, _ = bboxes.shape
+>         x1, y1, x2, y2 = bboxes[:, 0], bboxes[:, 1], bboxes[:, 2], bboxes[:, 3]
+> 
+>         x11 = x1.unsqueeze(1)
+>         y11 = y1.unsqueeze(1)
+>         x21 = x2.unsqueeze(1)
+>         y21 = y2.unsqueeze(1)
+>         cls1 = cls.unsqueeze(1)
+> 
+>         x12 = x1.unsqueeze(0)
+>         y12 = y1.unsqueeze(0)
+>         x22 = x2.unsqueeze(0)
+>         y22 = y2.unsqueeze(0)
+>         cls2 = cls.unsqueeze(0)
+> 
+>         threshold = 9
+>         idx = torch.arange(n_bboxes).to(self.device)
+>         idx_mask = idx[:, None] < idx
+>         cls_mask = cls1 == cls2
+>         cls_mask = torch.logical_and(idx_mask, cls_mask)
+> 
+>         y_no_overlap_mask = torch.logical_or(y21 < y12, y22 < y11)
+>         x_mask = torch.logical_and(torch.abs(x12 - x11) < threshold, torch.abs(x22 - x21) < threshold)
+>         x_mask = torch.logical_and(x_mask, y_no_overlap_mask)
+>         x_mask = torch.logical_and(x_mask, cls_mask)
+> 
+>         x_no_overlap_mask = torch.logical_or(x21 < x12, x22 < x11)
+>         y_mask = torch.logical_and(torch.abs(y12 - y11) < threshold, torch.abs(y22 - y21) < threshold)
+>         y_mask = torch.logical_and(y_mask, x_no_overlap_mask)
+>         y_mask = torch.logical_and(y_mask, cls_mask)
+> 
+>         x_scores = torch.pow(x12 - x11, 2) + torch.pow(x22 - x21, 2)
+>         y_scores = torch.pow(y12 - y11, 2) + torch.pow(y22 - y21, 2)
+> 
+>         score = torch.mean(x_scores[x_mask]) + torch.mean(y_scores[y_mask])
+>         return torch.nan_to_num(score, 0)
+> 
+297a336,341
+>         pred_bboxes_pix = pred_bboxes * stride_tensor
+> 
+>         custom_loss = 0.0
+>         for i in range(batch_size):
+>             custom_loss += self.align_loss(pred_bboxes_pix[i][fg_mask[i]], target_labels[i][fg_mask[i]])
+> 
+300a345,348
+> 
+>         loss[1] += loss[2]
+>         loss[2] = 0.0
+>         loss[2] += custom_loss * 0.5 / batch_size

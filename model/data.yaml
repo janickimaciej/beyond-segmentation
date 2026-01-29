@@ -1,0 +1,18 @@
+path: ../../data/yolo
+train: train
+val: val
+test: test
+
+nc: 10
+names: [
+    "window",
+    "door",
+    "cornice",
+    "sill",
+    "balcony",
+    "blind",
+    "deco",
+    "molding",
+    "pillar",
+    "shop"
+]
