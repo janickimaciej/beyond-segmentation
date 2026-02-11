@@ -1,18 +1,20 @@
 import os
-os.chdir("ultralytics")
+import sys
 
-from pathlib import Path
+ultralytics_path = os.path.abspath(os.path.join(os.getcwd(), "ultralytics"))
+sys.path.insert(0, ultralytics_path)
+
 from ultralytics.models.yolo import YOLO
 
 model_dir = "train"
-in_dir = "../../data/yolo/test/images"
+in_dir = "../data/yolo/test/images"
 
-model = YOLO(f"runs/detect/{model_dir}/weights/best.pt")
+model = YOLO(f"runs/{model_dir}/weights/best.pt")
 
 images = [filename for filename in os.listdir(in_dir)]
 results = model.predict([in_dir + "/" + filename for filename in images])
 
-out_dir = f"runs/detect/infer_{model_dir}"
+out_dir = f"runs/infer_{model_dir}"
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
 for i in range(len(results)):

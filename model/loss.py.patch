@@ -37,6 +37,10 @@
 >         score = torch.mean(x_scores[x_mask]) + torch.mean(y_scores[y_mask])
 >         return torch.nan_to_num(score, 0)
 > 
+270c308
+<         _, target_bboxes, target_scores, fg_mask, _ = self.assigner(
+---
+>         target_labels, target_bboxes, target_scores, fg_mask, _ = self.assigner(
 297a336,341
 >         pred_bboxes_pix = pred_bboxes * stride_tensor
 > 
