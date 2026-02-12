@@ -1,5 +1,4 @@
-# Beyond Segmentation: Structurally Informed Facade Parsing from
-Imperfect Images
+# Beyond Segmentation: Structurally Informed Facade Parsing from Imperfect Images
 
 ## Overview
 
