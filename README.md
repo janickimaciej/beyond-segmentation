@@ -4,7 +4,9 @@
 
 This project is a modification of the YOLOv8 model.
 
-<img src="./bboxes_align.png" width="200">
+<p align="center">
+	<img src="./bboxes_align.png" width="400">
+<\p>
 
 ## Environment
 
