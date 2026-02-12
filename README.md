@@ -84,4 +84,4 @@ python svd_mse.py
 
 It will generate a PNG file with a graph of the MSE value for different values of k. The script will also print to the console the approximated area under plots for both the baseline and the modified model.
 
-By default, the script uses masks of the generated windows (class 0). To use a different class of facade elements, modify the "cls" value to the index of the desired class (you can find the list of classes with corresponding indices in the data/classes.py file).
+By default, the script uses masks of the generated windows (class 0). To use a different class of facade elements, set the "cls" variable in the svd_mse.py script to the index of the desired class (you can find the list of classes with corresponding indices in the data/classes.py file).
