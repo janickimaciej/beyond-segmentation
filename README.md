@@ -2,11 +2,15 @@
 
 ## Overview
 
-This project is a modification of the YOLOv8 model.
+Aim of this project is to develop an automatic facade segmentation model. As a baseline, we use the Ultralytics YOLOv8 detector. We introduce a lightweight pairwise alignment regularizer that encourages consistent row/column structure among same-class predictors. It aims to correct segmentation imperfections resulting from perspective and occlusion while maintaining trade-off with standard detection accuracy.
+
+To reach our goal, we define a loss term operating on bounding boxes selected by the YOLO assigner. For x or y axis, it identifies a pair of bounding boxes as a candidate for alignment if: they are of the same class, they don't overlap and the absolute differences between corresponding x/y coordinates are below a user-defined threshold T (as shown in the image below). If all conditions are met, the resulting loss term is equal to the absolute difference between the corresponding x/y coordinates.
+
+The loss term is then averaged over all candidate pairs and added to the original YOLO loss term with a user-defined weight.
 
 <p align="center">
 	<img src="./bboxes_align.png" width="400">
-<\p>
+</p>
 
 ## Environment
 
